@@ -1,0 +1,76 @@
+public static void main(String[] args) throws NumberFormatException, IOException {
+	// Reads each entry of the list and puts in an ArrayList as a String
+	List <String> input = new ArrayList<String>();
+	File file = new File("C:\\Users\\jenni\\Desktop\\AdventOfCode\\Inputpuzzle2.txt");
+	Scanner scan = new Scanner(file); 
+	while (scan.hasNextLine()) {
+		input.add(scan.nextLine());
+	}
+	scan.close();
+	int valid = 0;
+	int invalid = 0;
+
+	// Part One
+	for (int i = 0; i < input.size(); i++) {
+		// Split the entry on space.
+		String[] policy = input.get(i).split(" ");
+		// Split the first part of the policy in the minimal and maximal occurrences of the letter.
+		String[] occ = policy[0].split("-");
+		int min = Integer.parseInt(occ[0]);
+		int max = Integer.parseInt(occ[1]);
+		// Split the second part of the policy so it can be recognized as a character.
+		String[] temp = policy[1].split(":");
+		char letter = temp[0].charAt(0);
+		// Set the password as the third part of the policy.
+		String password = policy[2];
+			
+		// Check whether the characters of the password equal the specified letter and count the number of occurences.
+		int counter = 0;
+		for (char ch : password.toCharArray()) {
+			if (ch == letter) {
+				counter += 1;
+			}
+		}
+		// A password is valid if the number of occurences is above the minimum and below the maximum.
+		if (counter >= min && counter <= max) {
+			valid += 1;
+		} else {
+			invalid += 1;
+		}
+	}
+	// Print the number of valid and invalid passwords.
+	System.out.println("Number of valid passwords: " + valid);
+	System.out.println("Number of invalid passwords: " + invalid);
+  
+  // Part Two
+	int validTwo = 0;
+	int invalidTwo = 0;
+	for (int j = 0; j < input.size(); j++) {
+		// Split the entry on space.
+		String[] policy = input.get(j).split(" ");
+		// Split the first part of the policy in the minimal and maximal occurrences of the letter.
+		String[] occ = policy[0].split("-");
+		int min = Integer.parseInt(occ[0]);
+		int max = Integer.parseInt(occ[1]);
+		// Split the second part of the policy so it can be recognized as a character.
+		String[] temp = policy[1].split(":");
+		char letter = temp[0].charAt(0);
+		// Set the password as the third part of the policy and convert it to an array of characters so the position can be specified.
+		String password = policy[2];
+		char[] chrs = password.toCharArray();
+			
+		// Convert min and max to the index of character.
+		int minIndex = min - 1;
+		int maxIndex = max - 1;
+		// Either the lower or higher position needs to be the specified letter, however it's not allowed for both to be the specified letter.
+		if ((chrs[minIndex] == letter || chrs[maxIndex] == letter) && !(chrs[minIndex] == letter && chrs[maxIndex] == letter)) {
+			validTwo += 1;
+		} else {
+			invalidTwo += 1;
+		}	
+	}
+	// Print the number of valid and invalid passwords.
+	System.out.println("Number of valid passwords: " + validTwo);
+	System.out.println("Number of invalid passwords: " + invalidTwo);
+  }
+}
