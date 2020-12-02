@@ -1,0 +1,46 @@
+public static void main(String[] args) throws NumberFormatException, IOException {
+  // Reads each entry of the list and puts in an ArrayList as integer
+  List <Integer> numbers = new ArrayList<Integer>();
+	File file = new File("C:\\Users\\jenni\\Desktop\\AdventOfCode\\Inputpuzzle1.txt");
+	Scanner scan = new Scanner(file); 
+	while (scan.hasNextLine()) {
+		String[] nextLine = scan.nextLine().split(" ");
+		for (int i = 0; i < nextLine.length; i++) {
+			int number = Integer.parseInt(nextLine[i]);
+			numbers.add(number);
+		}
+	}
+	scan.close();
+		
+  /* The first part requires the sum of two entries to be 2020.
+	Each number is added to each number to check if this results in 2020.
+	If it results in 2020 the individual numbers and the multiplication of the two are printed.
+	*/
+	for (int j = 0; j < numbers.size(); j++) {
+		for (int num : numbers) {
+			int resultTwo = num + numbers.get(j);
+			if (resultTwo == 2020) {
+				System.out.println(resultTwo);
+				System.out.println(num + " + " + numbers.get(j));
+				System.out.println(num * numbers.get(j));
+			}
+		}
+	}
+		
+  /* The second part requires the sum of three entries to be 2020.
+	All combinations of additions are performed to check if it results in 2020.
+	If it results in 2020 the individual numbers and the multiplication of the three numbers are printed.
+	*/
+	for (int j = 0; j < numbers.size(); j++) {
+		for (int num : numbers) {
+			for (int numb : numbers) {
+				int resultThree = num + numb + numbers.get(j);
+				if (resultThree == 2020) {
+					System.out.println(resultThree);
+					System.out.println(num + " + " + numb + " + " + numbers.get(j));
+					System.out.println(num * numb * numbers.get(j));
+				}
+			}
+		}
+	}
+}
